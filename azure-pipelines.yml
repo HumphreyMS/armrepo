@@ -1,0 +1,26 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'hzarm-conn'
+    subscriptionId: '1bc7be44-c3d6-407e-938a-0d87d26b2b83'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'hzarmrg1'
+    location: 'Central US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/HumphreyMS/armrepo/main/CreateWebApp/azuredeploy.json'
+    overrideParameters: '-projectName hzev2pj'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployPipelineTemplate'
+  displayName: 'Run a multi-line script'
